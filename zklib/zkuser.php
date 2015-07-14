@@ -102,7 +102,7 @@
                     $userid = explode( chr(0), $userid, 2);
                     $userid = $userid[0];
                     $name = explode(chr(0), $name, 3);
-                    $name = $name[0];
+                    $name = utf8_encode($name[0]);
                     
                     if ( $name == "" )
                         $name = $uid;
