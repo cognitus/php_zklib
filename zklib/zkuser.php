@@ -89,8 +89,9 @@
                 while ( strlen($userdata) > 72 ) {
                     
                     $u = unpack( 'H144', substr( $userdata, 0, 72) );
-                    
+
                     $uid = hexdec( substr($u[1], 0, 4) ).' '; 
+                    $cardno = hexdec( substr($u[1], 78, 2).substr($u[1], 76, 2).substr($u[1], 74, 2).substr($u[1], 72, 2) ).' '; 
                     $role = hexdec( substr($u[1], 4, 4) ).' '; 
                     $password = hex2bin( substr( $u[1], 8, 16 ) ).' '; 
                     $name = hex2bin( substr( $u[1], 24, 74 ) ). ' '; 
@@ -103,11 +104,12 @@
                     $userid = $userid[0];
                     $name = explode(chr(0), $name, 3);
                     $name = utf8_encode($name[0]);
+                    $cardno = str_pad($cardno,11,'0',STR_PAD_LEFT);
                     
                     if ( $name == "" )
                         $name = $uid;
                     
-                    $users[$uid] = array($userid, $name, intval( $role ), $password);
+                    $users[$uid] = array($userid, $name, $cardno, $uid,intval( $role ), $password);
                     
                     $userdata = substr( $userdata, 72 );
                 }
