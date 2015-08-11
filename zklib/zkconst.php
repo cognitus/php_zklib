@@ -14,10 +14,14 @@
     define( 'CMD_PREPARE_DATA', 1500 );
     define( 'CMD_DATA', 1501 );
 
+    define( 'CMD_SET_USER', 8 );
     define( 'CMD_USERTEMP_RRQ', 9 );
+    define( 'CMD_DEVICE', 11 );
     define( 'CMD_ATTLOG_RRQ', 13 );
     define( 'CMD_CLEAR_DATA', 14 );
     define( 'CMD_CLEAR_ATTLOG', 15 );
+    define( 'CMD_DEL_USER', 18 );
+    define( 'CMD_CLEAR_ADMIN', 20 );
 
     define( 'CMD_WRITE_LCD', 66 );
 
@@ -25,10 +29,7 @@
     define( 'CMD_SET_TIME', 202 );
 
     define( 'CMD_VERSION', 1100 );
-    define( 'CMD_DEVICE', 11 );
 
-    define( 'CMD_CLEAR_ADMIN', 20 );
-    define( 'CMD_SET_USER', 8 );
 
     define( 'LEVEL_USER', 0 );
     define( 'LEVEL_ADMIN', 14 );

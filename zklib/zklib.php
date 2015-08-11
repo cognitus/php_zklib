@@ -180,6 +180,10 @@
             return zkenabledevice($this);
         }
         
+        public function delUser($id) {
+            return zkdeluser($this, $id);
+        }
+        
         public function getUser() {
             return zkgetuser($this);
         }
