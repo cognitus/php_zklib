@@ -5,11 +5,13 @@
     
     <body>
 <?php
-    include("zklib/zklib.php");
-    
-    $zk = new ZKLib("192.168.20.10", 4370);
-    
+
+    include("./zklib/zklib.php");
+
+    $zk = new ZKLib("192.168.0.19", 4370);
+        
     $ret = $zk->connect();
+   
     sleep(1);
     if ( $ret ): 
         $zk->disableDevice();
@@ -107,7 +109,7 @@
             $attendance = $zk->getAttendance();
             sleep(1);
             while(list($idx, $attendancedata) = each($attendance)):
-                if ( $attendancedata[2] == 14 )
+                if ( $attendancedata[2] == 1 )
                     $status = 'Check Out';
                 else
                     $status = 'Check In';
