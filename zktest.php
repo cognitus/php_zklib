@@ -109,10 +109,23 @@
             $attendance = $zk->getAttendance();
             sleep(1);
             while(list($idx, $attendancedata) = each($attendance)):
-                if ( $attendancedata[2] == 1 )
-                    $status = 'Check Out';
-                else
-                    $status = 'Check In';
+	      // no idea if in other models have different codes state :(   
+	      switch ($attendancedata[2]) {
+		case 1:
+		  $status = 'Check Out';
+		  break;
+		case 0:
+		  $status = 'Check In';
+		  break;
+		case 5:
+		   $status = 'Overtime-Out';
+		  break;
+		case 4:
+		  $status = 'Overtime-In';
+		  break;
+		default:
+		  $status = 'Check In';
+	      }
             ?>
             <tr>
                 <td><?php echo $idx ?></td>
