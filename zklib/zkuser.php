@@ -15,6 +15,33 @@
             return FALSE;
     }
     
+    function zkdeluser($self,$uid) {
+        $command = CMD_DEL_USER;
+        $command_string = str_pad(chr( $uid ), 2, chr(0));//.chr($role).str_pad($password, 8, chr(0)).str_pad($name, 28, chr(0)).str_pad(chr(1), 9, chr(0)).str_pad($userid, 8, chr(0)).str_repeat(chr(0),16);
+        $chksum = 0;
+        $session_id = $self->session_id;
+        
+        $u = unpack('H2h1/H2h2/H2h3/H2h4/H2h5/H2h6/H2h7/H2h8', substr( $self->data_recv, 0, 8) );
+        $reply_id = hexdec( $u['h8'].$u['h7'] );
+
+        $buf = $self->createHeader($command, $chksum, $session_id, $reply_id, $command_string);
+        
+        socket_sendto($self->zkclient, $buf, strlen($buf), 0, $self->ip, $self->port);
+        
+        try {
+            socket_recvfrom($self->zkclient, $self->data_recv, 1024, 0, $self->ip, $self->port);
+            
+            $u = unpack('H2h1/H2h2/H2h3/H2h4/H2h5/H2h6', substr( $self->data_recv, 0, 8 ) );
+            
+            $self->session_id =  hexdec( $u['h6'].$u['h5'] );
+            return substr( $self->data_recv, 8 );
+        } catch(ErrorException $e) {
+            return FALSE;
+        } catch(exception $e) {
+            return False;
+        }
+    }
+
     function zksetuser($self, $uid, $userid, $name, $password, $role) {
         $command = CMD_SET_USER;
         $byte1 = chr((int)($uid % 256));
