@@ -92,7 +92,9 @@
                     
                     $u = unpack( 'H144', substr( $userdata, 0, 72) );
 
-                    $uid = hexdec( substr($u[1], 0, 4) ).' '; 
+                    $u1 = hexdec( substr($u[1], 2, 2) );
+		    $u2 = hexdec( substr($u[1], 4, 2) );
+		    $uid = $u1+($u2*256);
                     $cardno = hexdec( substr($u[1], 78, 2).substr($u[1], 76, 2).substr($u[1], 74, 2).substr($u[1], 72, 2) ).' '; 
                     $role = hexdec( substr($u[1], 4, 4) ).' '; 
                     $password = hex2bin( substr( $u[1], 8, 16 ) ).' '; 
